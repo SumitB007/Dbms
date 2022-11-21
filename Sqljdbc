@@ -1,0 +1,48 @@
+package my_jdbc;
+
+import java.sql.*;
+
+public class my_conn {
+	public static void main(String args[]) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/my_db", "root", "MH!$bf5292");
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("Select * from emp");
+			
+			while(rs.next()) {
+				System.out.print(rs.getInt(1) + " " + rs.getString(2));
+				System.out.println();
+			}
+			
+			String s = "update emp set name='xyz' where id=1";
+			
+			Statement stmt1 = con.createStatement();
+			stmt1.executeUpdate(s);
+			
+			ResultSet rs1 = stmt.executeQuery("Select * from emp");
+			
+			while(rs1.next()) {
+				System.out.print(rs1.getInt(1) + " " + rs1.getString(2));
+				System.out.println();
+			}
+			
+			String s1 = "delete from emp where id=1";
+			
+			Statement stmt2 = con.createStatement();
+			stmt2.executeUpdate(s1);
+			
+			ResultSet rs2 = stmt.executeQuery("Select * from emp");
+			
+			while(rs2.next()) {
+				System.out.print(rs2.getInt(1) + " " + rs2.getString(2));
+				System.out.println();
+			}
+			
+			con.close();
+		} 
+		catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+}
